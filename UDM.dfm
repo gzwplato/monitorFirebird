@@ -3,6 +3,7 @@ object DataModule2: TDataModule2
   Height = 373
   Width = 528
   object ConectaBanco: TIBDatabase
+    DatabaseName = '@'
     Params.Strings = (
       'user_name='
       'password=')

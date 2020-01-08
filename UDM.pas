@@ -3,7 +3,10 @@ unit UDM;
 interface
 
 uses
-  System.SysUtils, System.Classes, IBX.IBDatabase, Data.DB, IBX.IBDatabaseINI;
+  System.SysUtils, System.Classes, IBX.IBDatabase, Data.DB, IBX.IBDatabaseINI,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
+  FireDAC.Phys, FireDAC.VCLUI.Wait, FireDAC.Comp.Client, Data.Win.ADODB;
 
 type
   TDataModule2 = class(TDataModule)

@@ -47,13 +47,9 @@ begin
   UDM.DataModule2.ConectaBanco.Params.Values['user_name'] := edtUser.Text;
   udm.DataModule2.ConectaBanco.Params.Values['password'] := edtPassword.Text;
   udm.DataModule2.ConectaBanco.LoginPrompt := False;
-  udm.DataModule2.ConectaBanco.TestConnected;
+  UDM.DataModule2.ConectaBanco.Connected := True;
   udm.DataModule2.TRSConectaBanco.Active := True;
-
-
-
-    frmMonitor.ShowModal;
-    frmLogin.Close;
+  frmMonitor.ShowModal;
 end;
 
 end.

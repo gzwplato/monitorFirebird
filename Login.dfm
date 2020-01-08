@@ -73,6 +73,7 @@ object frmLogin: TfrmLogin
     Top = 98
     Width = 137
     Height = 21
+    PasswordChar = '*'
     TabOrder = 4
   end
 end

@@ -66,14 +66,14 @@ type
     edtDellConexao: TEdit;
     btnDellConexao: TButton;
     btnCancelDellConexao: TButton;
-    DBText1: TDBText;
-    DBText2: TDBText;
-    DBText3: TDBText;
+    dbtShutdown: TDBText;
+    dbtOldActive: TDBText;
+    dbtOldTrans: TDBText;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    DBText4: TDBText;
+    dbtNextTrans: TDBText;
     tabSQL: TTabSheet;
     dtsourceSQL: TDataSource;
     DBGrid4: TDBGrid;
@@ -82,16 +82,18 @@ type
     tabScripts: TTabSheet;
     DBGrid5: TDBGrid;
     IBConfigService1: TIBConfigService;
-    DBText5: TDBText;
-    DBText6: TDBText;
+    dbtBanco: TDBText;
+    dbtSweep: TDBText;
     lblNomePc_v: TLabel;
     grpInfoBanco: TGroupBox;
     grpConBanco: TGroupBox;
-    procedure FormCreate(Sender: TObject);
+    queryScripts: TIBQuery;
+    dtsourceScripts: TDataSource;
     procedure btnAtualizarGridsClick(Sender: TObject);
     procedure btnDellConexaoClick(Sender: TObject);
     procedure btnCancelDellConexaoClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -105,7 +107,7 @@ implementation
 
 {$R *.dfm}
 
-uses UDM;
+uses UDM, Login;
 
 procedure TfrmMonitor.btnAtualizarGridsClick(Sender: TObject);
   begin
@@ -127,26 +129,34 @@ procedure TfrmMonitor.btnDellConexaoClick(Sender: TObject);
 
 procedure TfrmMonitor.Button1Click(Sender: TObject);
   begin
-  IBConfigService1.SweepDatabase;
+    IBConfigService1.SweepDatabase;
   end;
 
 procedure TfrmMonitor.btnCancelDellConexaoClick(Sender: TObject);
   begin
-  edtDellConexao.Text := '';
+    edtDellConexao.Text := '';
   end;
 
-procedure TfrmMonitor.FormCreate(Sender: TObject);
 
+procedure TfrmMonitor.FormShow(Sender: TObject);
   begin
-   lblFirebird_v.Caption := IBDatabaseInfo1.Version;
-   //lblBanco_v.Caption := IBDatabaseInfo1.DBFileName;
-   lblPaginacao_v.Caption := IntToStr(IBDatabaseInfo1.PageSize);
-   lblODS_v.Caption := FloatToStr(IBDatabaseInfo1.FullODS);
-   lblNomePc_v.Caption := IBDatabaseInfo1.DBSiteName;
-   lblEscritaForcada_v.Caption := IntToStr(IBDatabaseInfo1.ForcedWrites);
-   lblCurrentMemory_v.Caption := FloatToStr(IBDatabaseInfo1.CurrentMemory);
-  //lblSweep_v.Caption := IntToStr(IBDatabaseInfo1.SweepInterval);
-   lblBuffers_v.Caption := IntToStr(IBDatabaseInfo1.NumBuffers);
+    queryConexoes.Active:=True;
+    queryTransacoes.Active:=True;
+    queryBanco.Active:=True;
+    querySQL.Active:=True;
+    queryScripts.Active:=True;
+
+    lblFirebird_v.Caption :=IBDatabaseInfo1.Version;
+    //lblBanco_v.Caption := IBDatabaseInfo1.DBFileName;
+    lblPaginacao_v.Caption :=IntToStr(IBDatabaseInfo1.PageSize);
+    lblODS_v.Caption :=FloatToStr(IBDatabaseInfo1.FullODS);
+    lblNomePc_v.Caption := IBDatabaseInfo1.DBSiteName;
+    lblEscritaForcada_v.Caption :=IntToStr(IBDatabaseInfo1.ForcedWrites);
+    lblCurrentMemory_v.Caption :=FloatToStr(IBDatabaseInfo1.CurrentMemory);
+    //lblSweep_v.Caption :=IntToStr(IBDatabaseInfo1.SweepInterval);
+    lblBuffers_v.Caption :=IntToStr(IBDatabaseInfo1.NumBuffers);
+
+
   end;
 
 end.
