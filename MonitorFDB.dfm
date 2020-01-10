@@ -2,7 +2,7 @@ object frmMonitor: TfrmMonitor
   Left = 0
   Top = 0
   Caption = 'Monitor de Banco Firebird'
-  ClientHeight = 679
+  ClientHeight = 534
   ClientWidth = 802
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object frmMonitor: TfrmMonitor
   object PageControl1: TPageControl
     AlignWithMargins = True
     Left = 8
-    Top = 337
+    Top = 185
     Width = 794
     Height = 334
     ActivePage = tabBanco
@@ -122,8 +122,8 @@ object frmMonitor: TfrmMonitor
     end
   end
   object btnAtualizarGrids: TButton
-    Left = 713
-    Top = 322
+    Left = 601
+    Top = 144
     Width = 82
     Height = 25
     Caption = 'Atualizar Abas'
@@ -132,7 +132,7 @@ object frmMonitor: TfrmMonitor
   end
   object Button1: TButton
     Left = 689
-    Top = 291
+    Top = 144
     Width = 105
     Height = 25
     Caption = 'Executar Sweep'
@@ -143,7 +143,7 @@ object frmMonitor: TfrmMonitor
     Left = 8
     Top = 8
     Width = 417
-    Height = 209
+    Height = 161
     Caption = 'Informa'#231#245'es do Banco'
     TabOrder = 3
     object dbtBanco: TDBText
@@ -296,27 +296,6 @@ object frmMonitor: TfrmMonitor
       Height = 13
       Caption = 'Shutdown:'
     end
-    object Label2: TLabel
-      Left = 3
-      Top = 153
-      Width = 64
-      Height = 13
-      Caption = 'Oldest Active'
-    end
-    object Label3: TLabel
-      Left = 3
-      Top = 172
-      Width = 90
-      Height = 13
-      Caption = 'Oldest Transaction'
-    end
-    object Label4: TLabel
-      Left = 3
-      Top = 191
-      Width = 82
-      Height = 13
-      Caption = 'Next Transaction'
-    end
     object dbtShutdown: TDBText
       Left = 281
       Top = 134
@@ -325,9 +304,25 @@ object frmMonitor: TfrmMonitor
       DataField = 'MON$SHUTDOWN_MODE'
       DataSource = dtsourceBanco
     end
+  end
+  object grpConBanco: TGroupBox
+    Left = 431
+    Top = 8
+    Width = 258
+    Height = 121
+    Caption = 'Conex'#245'es do banco'
+    TabOrder = 4
+    object dbtNextTrans: TDBText
+      Left = 99
+      Top = 31
+      Width = 105
+      Height = 11
+      DataField = 'MON$NEXT_TRANSACTION'
+      DataSource = dtsourceBanco
+    end
     object dbtOldActive: TDBText
-      Left = 75
-      Top = 153
+      Left = 99
+      Top = 48
       Width = 105
       Height = 12
       DataField = 'MON$OLDEST_ACTIVE'
@@ -335,39 +330,44 @@ object frmMonitor: TfrmMonitor
     end
     object dbtOldTrans: TDBText
       Left = 99
-      Top = 172
+      Top = 66
       Width = 64
       Height = 11
       DataField = 'MON$OLDEST_TRANSACTION'
       DataSource = dtsourceBanco
     end
-    object dbtNextTrans: TDBText
-      Left = 91
-      Top = 191
-      Width = 105
-      Height = 11
-      DataField = 'MON$NEXT_TRANSACTION'
-      DataSource = dtsourceBanco
+    object Label2: TLabel
+      Left = 3
+      Top = 48
+      Width = 64
+      Height = 13
+      Caption = 'Oldest Active'
     end
-  end
-  object grpConBanco: TGroupBox
-    Left = 8
-    Top = 229
-    Width = 279
-    Height = 102
-    Caption = 'Conex'#245'es do banco'
-    TabOrder = 4
+    object Label3: TLabel
+      Left = 3
+      Top = 67
+      Width = 90
+      Height = 13
+      Caption = 'Oldest Transaction'
+    end
+    object Label4: TLabel
+      Left = 3
+      Top = 29
+      Width = 82
+      Height = 13
+      Caption = 'Next Transaction'
+    end
     object edtDellConexao: TEdit
-      Left = 5
-      Top = 26
+      Left = 3
+      Top = 86
       Width = 121
       Height = 21
       TabOrder = 0
       TextHint = 'Insira o id da conexao'
     end
     object btnDellConexao: TButton
-      Left = 132
-      Top = 24
+      Left = 129
+      Top = 83
       Width = 57
       Height = 25
       Caption = 'Deletar'
@@ -375,8 +375,8 @@ object frmMonitor: TfrmMonitor
       OnClick = btnDellConexaoClick
     end
     object btnCancelDellConexao: TButton
-      Left = 195
-      Top = 24
+      Left = 192
+      Top = 83
       Width = 57
       Height = 25
       Caption = 'Cancelar'
