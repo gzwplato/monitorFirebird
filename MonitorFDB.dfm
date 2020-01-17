@@ -3,7 +3,7 @@ object frmMonitor: TfrmMonitor
   Top = 0
   Caption = 'Monitor de Banco Firebird'
   ClientHeight = 534
-  ClientWidth = 802
+  ClientWidth = 818
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,17 +11,18 @@ object frmMonitor: TfrmMonitor
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesigned
+  Position = poScreenCenter
+  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
     AlignWithMargins = True
     Left = 8
-    Top = 185
+    Top = 193
     Width = 794
     Height = 334
-    ActivePage = tabBanco
+    ActivePage = tabSQL
     TabOrder = 0
     object tabBanco: TTabSheet
       Caption = 'Banco'
@@ -122,8 +123,8 @@ object frmMonitor: TfrmMonitor
     end
   end
   object btnAtualizarGrids: TButton
-    Left = 601
-    Top = 144
+    Left = 343
+    Top = 175
     Width = 82
     Height = 25
     Caption = 'Atualizar Abas'
@@ -131,8 +132,8 @@ object frmMonitor: TfrmMonitor
     OnClick = btnAtualizarGridsClick
   end
   object Button1: TButton
-    Left = 689
-    Top = 144
+    Left = 431
+    Top = 175
     Width = 105
     Height = 25
     Caption = 'Executar Sweep'
@@ -154,14 +155,6 @@ object frmMonitor: TfrmMonitor
       DataField = 'MON$DATABASE_NAME'
       DataSource = dtsourceBanco
     end
-    object dbtSweep: TDBText
-      Left = 102
-      Top = 136
-      Width = 64
-      Height = 11
-      DataField = 'MON$SWEEP_INTERVAL'
-      DataSource = dtsourceBanco
-    end
     object lblBanco: TLabel
       Left = 3
       Top = 21
@@ -175,13 +168,6 @@ object frmMonitor: TfrmMonitor
       Width = 66
       Height = 13
       Caption = 'Page buffers:'
-    end
-    object lblBuffers_v: TLabel
-      Left = 299
-      Top = 96
-      Width = 57
-      Height = 13
-      Caption = 'valor buffer'
     end
     object lblCurrentMemory: TLabel
       Left = 3
@@ -204,7 +190,7 @@ object frmMonitor: TfrmMonitor
       Height = 13
       Caption = 'Data Cria'#231#227'o:'
     end
-    object lblDataCriacao_v: TDBText
+    object dbtDataCriacao: TDBText
       Left = 75
       Top = 40
       Width = 105
@@ -218,13 +204,6 @@ object frmMonitor: TfrmMonitor
       Width = 78
       Height = 13
       Caption = 'Escrita For'#231'ada:'
-    end
-    object lblEscritaForcada_v: TLabel
-      Left = 311
-      Top = 115
-      Width = 99
-      Height = 13
-      Caption = 'valor escrita forcada'
     end
     object lblFirebird: TLabel
       Left = 3
@@ -261,26 +240,12 @@ object frmMonitor: TfrmMonitor
       Height = 13
       Caption = 'ODS:'
     end
-    object lblODS_v: TLabel
-      Left = 258
-      Top = 77
-      Width = 44
-      Height = 13
-      Caption = 'valor ods'
-    end
     object lblPaginacao: TLabel
       Left = 3
       Top = 96
       Width = 50
       Height = 13
       Caption = 'Page Size:'
-    end
-    object lblPaginacao_v: TLabel
-      Left = 59
-      Top = 96
-      Width = 69
-      Height = 13
-      Caption = 'valor pagesize'
     end
     object lblSweep: TLabel
       Left = 3
@@ -289,7 +254,7 @@ object frmMonitor: TfrmMonitor
       Height = 13
       Caption = 'Sweep Autom'#225'tico:'
     end
-    object Label1: TLabel
+    object lblShutdown: TLabel
       Left = 227
       Top = 134
       Width = 52
@@ -304,17 +269,57 @@ object frmMonitor: TfrmMonitor
       DataField = 'MON$SHUTDOWN_MODE'
       DataSource = dtsourceBanco
     end
+    object dbtVlrBuffer: TDBText
+      Left = 299
+      Top = 96
+      Width = 65
+      Height = 17
+      DataField = 'MON$PAGE_BUFFERS'
+      DataSource = dtsourceBanco
+    end
+    object dbtForceWrites: TDBText
+      Left = 311
+      Top = 115
+      Width = 65
+      Height = 17
+      DataField = 'MON$FORCED_WRITES'
+      DataSource = dtsourceBanco
+    end
+    object dbtODS: TDBText
+      Left = 258
+      Top = 77
+      Width = 65
+      Height = 17
+      DataField = 'MON$ODS_MAJOR'
+      DataSource = dtsourceBanco
+    end
+    object dbtPageSize: TDBText
+      Left = 59
+      Top = 96
+      Width = 65
+      Height = 17
+      DataField = 'MON$PAGE_SIZE'
+      DataSource = dtsourceBanco
+    end
+    object dbtSweep: TDBText
+      Left = 102
+      Top = 134
+      Width = 65
+      Height = 17
+      DataField = 'MON$SWEEP_INTERVAL'
+      DataSource = dtsourceBanco
+    end
   end
   object grpConBanco: TGroupBox
     Left = 431
     Top = 8
-    Width = 258
-    Height = 121
-    Caption = 'Conex'#245'es do banco'
+    Width = 367
+    Height = 161
+    Caption = 'Conex'#245'es e Transa'#231#245'es do banco'
     TabOrder = 4
     object dbtNextTrans: TDBText
       Left = 99
-      Top = 31
+      Top = 21
       Width = 105
       Height = 11
       DataField = 'MON$NEXT_TRANSACTION'
@@ -322,7 +327,7 @@ object frmMonitor: TfrmMonitor
     end
     object dbtOldActive: TDBText
       Left = 99
-      Top = 48
+      Top = 38
       Width = 105
       Height = 12
       DataField = 'MON$OLDEST_ACTIVE'
@@ -330,7 +335,7 @@ object frmMonitor: TfrmMonitor
     end
     object dbtOldTrans: TDBText
       Left = 99
-      Top = 66
+      Top = 56
       Width = 64
       Height = 11
       DataField = 'MON$OLDEST_TRANSACTION'
@@ -338,36 +343,96 @@ object frmMonitor: TfrmMonitor
     end
     object Label2: TLabel
       Left = 3
-      Top = 48
+      Top = 40
       Width = 64
       Height = 13
       Caption = 'Oldest Active'
     end
     object Label3: TLabel
       Left = 3
-      Top = 67
+      Top = 56
       Width = 90
       Height = 13
       Caption = 'Oldest Transaction'
     end
     object Label4: TLabel
       Left = 3
-      Top = 29
+      Top = 21
       Width = 82
       Height = 13
       Caption = 'Next Transaction'
     end
+    object dbtCalcSweep: TDBText
+      Left = 280
+      Top = 39
+      Width = 65
+      Height = 17
+      DataField = 'GC'
+      DataSource = dtsourceSweep
+    end
+    object dbtCalcGC: TDBText
+      Left = 280
+      Top = 56
+      Width = 65
+      Height = 17
+      DataField = 'GC'
+      DataSource = dtsourceSweep
+    end
+    object dbtTopTrans: TDBText
+      Left = 99
+      Top = 73
+      Width = 65
+      Height = 17
+      DataField = 'MON$TOP_TRANSACTION'
+      DataSource = dtsourceSweep
+    end
+    object lblTopTrans: TLabel
+      Left = 3
+      Top = 75
+      Width = 77
+      Height = 13
+      Caption = 'Top Transaction'
+    end
+    object lblCalcSweep: TLabel
+      Left = 194
+      Top = 38
+      Width = 32
+      Height = 13
+      Caption = 'Sweep'
+    end
+    object lblGC: TLabel
+      Left = 194
+      Top = 56
+      Width = 14
+      Height = 13
+      Caption = 'GC'
+    end
+    object dbtTotalConex: TDBText
+      Left = 280
+      Top = 21
+      Width = 65
+      Height = 17
+      DataField = 'TOTAL_CONEXOES'
+      DataSource = dtsourceConex
+    end
+    object lblTotalConex: TLabel
+      Left = 191
+      Top = 21
+      Width = 75
+      Height = 13
+      Caption = 'Total Conex'#245'es'
+    end
     object edtDellConexao: TEdit
       Left = 3
-      Top = 86
+      Top = 131
       Width = 121
       Height = 21
       TabOrder = 0
       TextHint = 'Insira o id da conexao'
     end
     object btnDellConexao: TButton
-      Left = 129
-      Top = 83
+      Left = 130
+      Top = 129
       Width = 57
       Height = 25
       Caption = 'Deletar'
@@ -375,8 +440,8 @@ object frmMonitor: TfrmMonitor
       OnClick = btnDellConexaoClick
     end
     object btnCancelDellConexao: TButton
-      Left = 192
-      Top = 83
+      Left = 193
+      Top = 129
       Width = 57
       Height = 25
       Caption = 'Cancelar'
@@ -386,8 +451,8 @@ object frmMonitor: TfrmMonitor
   end
   object IBDatabaseInfo1: TIBDatabaseInfo
     Database = DataModule2.ConectaBanco
-    Left = 584
-    Top = 96
+    Left = 432
+    Top = 256
   end
   object queryConexoes: TIBQuery
     Database = DataModule2.ConectaBanco
@@ -397,8 +462,8 @@ object frmMonitor: TfrmMonitor
     ParamCheck = True
     SQL.Strings = (
       'select * from mon$attachments')
-    Left = 440
-    Top = 48
+    Left = 432
+    Top = 464
     object queryConexoesMONATTACHMENT_ID: TLargeintField
       FieldName = 'MON$ATTACHMENT_ID'
       Origin = '"MON$ATTACHMENTS"."MON$ATTACHMENT_ID"'
@@ -497,12 +562,12 @@ object frmMonitor: TfrmMonitor
   object dtsourceConexoes: TDataSource
     DataSet = queryConexoes
     Left = 520
-    Top = 48
+    Top = 464
   end
   object dtsourceTransacoes: TDataSource
     DataSet = queryTransacoes
-    Left = 632
-    Top = 56
+    Left = 528
+    Top = 360
   end
   object queryTransacoes: TIBQuery
     Database = DataModule2.ConectaBanco
@@ -512,8 +577,8 @@ object frmMonitor: TfrmMonitor
     ParamCheck = True
     SQL.Strings = (
       'select * from mon$transactions')
-    Left = 592
-    Top = 56
+    Left = 432
+    Top = 360
   end
   object queryBanco: TIBQuery
     Database = DataModule2.ConectaBanco
@@ -522,19 +587,20 @@ object frmMonitor: TfrmMonitor
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'select * from mon$database')
-    Left = 444
-    Top = 100
+      'select *'
+      ' from mon$database')
+    Left = 436
+    Top = 308
   end
   object dtsourceBanco: TDataSource
     DataSet = queryBanco
-    Left = 516
-    Top = 92
+    Left = 524
+    Top = 308
   end
   object dtsourceSQL: TDataSource
     DataSet = querySQL
-    Left = 630
-    Top = 8
+    Left = 526
+    Top = 408
   end
   object querySQL: TIBQuery
     Database = DataModule2.ConectaBanco
@@ -544,21 +610,15 @@ object frmMonitor: TfrmMonitor
     ParamCheck = True
     SQL.Strings = (
       'select * from mon$statements')
-    Left = 588
-    Top = 9
+    Left = 436
+    Top = 409
   end
   object IBConfigService1: TIBConfigService
-    ServerName = 'localhost'
-    Protocol = TCP
-    Params.Strings = (
-      'user_name=sysdba'
-      'password=masterkey')
-    LoginPrompt = False
     TraceFlags = []
     ServerType = 'IBServer'
     Database = DataModule2.ConectaBanco
-    Left = 628
-    Top = 97
+    Left = 524
+    Top = 249
   end
   object queryScripts: TIBQuery
     Database = DataModule2.ConectaBanco
@@ -579,12 +639,50 @@ object frmMonitor: TfrmMonitor
       '(select max(seq) from tbsghscr where tipo='#39'I'#39')Agendamento,'
       '(select max(seq) from tbsghscr where tipo='#39'J'#39')Esocial'
       'from rdb$database')
-    Left = 444
-    Top = 1
+    Left = 628
+    Top = 313
   end
   object dtsourceScripts: TDataSource
     DataSet = queryScripts
-    Left = 516
-    Top = 1
+    Left = 700
+    Top = 313
+  end
+  object querySweep: TIBQuery
+    Database = DataModule2.ConectaBanco
+    Transaction = DataModule2.TRSConectaBanco
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select'
+      'x.mon$top_transaction,'
+      'x.mon$oldest_active-x.mon$oldest_transaction as sweep,'
+      
+        '(select first 1 yy.mon$next_transaction from MON$DATABASE yy)-(s' +
+        'elect first 1 yy.mon$oldest_active from MON$DATABASE yy) gc'
+      'from mon$transactions x')
+    Left = 624
+    Top = 368
+  end
+  object dtsourceSweep: TDataSource
+    DataSet = querySweep
+    Left = 704
+    Top = 368
+  end
+  object queryConex: TIBQuery
+    Database = DataModule2.ConectaBanco
+    Transaction = DataModule2.TRSConectaBanco
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select count(MON$STATE) as total_conexoes from MON$ATTACHMENTS')
+    Left = 624
+    Top = 424
+  end
+  object dtsourceConex: TDataSource
+    DataSet = queryConex
+    Left = 704
+    Top = 416
   end
 end

@@ -52,16 +52,12 @@ type
     btnAtualizarGrids: TButton;
     lblEscritaForcada: TLabel;
     lblFirebird_v: TLabel;
-    lblBuffers_v: TLabel;
     lblCurrentMemory_v: TLabel;
-    lblEscritaForcada_v: TLabel;
-    lblPaginacao_v: TLabel;
-    lblODS_v: TLabel;
     tabBanco: TTabSheet;
     DBGrid3: TDBGrid;
     queryBanco: TIBQuery;
     dtsourceBanco: TDataSource;
-    lblDataCriacao_v: TDBText;
+    dbtDataCriacao: TDBText;
     lblDataCriacao: TLabel;
     edtDellConexao: TEdit;
     btnDellConexao: TButton;
@@ -69,7 +65,7 @@ type
     dbtShutdown: TDBText;
     dbtOldActive: TDBText;
     dbtOldTrans: TDBText;
-    Label1: TLabel;
+    lblShutdown: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -83,17 +79,34 @@ type
     DBGrid5: TDBGrid;
     IBConfigService1: TIBConfigService;
     dbtBanco: TDBText;
-    dbtSweep: TDBText;
     lblNomePc_v: TLabel;
     grpInfoBanco: TGroupBox;
     grpConBanco: TGroupBox;
     queryScripts: TIBQuery;
     dtsourceScripts: TDataSource;
+    dbtVlrBuffer: TDBText;
+    dbtForceWrites: TDBText;
+    dbtODS: TDBText;
+    dbtPageSize: TDBText;
+    dbtSweep: TDBText;
+    dbtCalcSweep: TDBText;
+    querySweep: TIBQuery;
+    dtsourceSweep: TDataSource;
+    dbtCalcGC: TDBText;
+    dbtTopTrans: TDBText;
+    lblTopTrans: TLabel;
+    lblCalcSweep: TLabel;
+    lblGC: TLabel;
+    queryConex: TIBQuery;
+    dtsourceConex: TDataSource;
+    dbtTotalConex: TDBText;
+    lblTotalConex: TLabel;
     procedure btnAtualizarGridsClick(Sender: TObject);
     procedure btnDellConexaoClick(Sender: TObject);
     procedure btnCancelDellConexaoClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -111,24 +124,33 @@ uses UDM, Login;
 
 procedure TfrmMonitor.btnAtualizarGridsClick(Sender: TObject);
   begin
-  UDM.DataModule2.TRSConectaBanco.Rollback;
-  queryConexoes.Active:=False;
-  queryConexoes.Active:=True;
-  queryTransacoes.Active:=False;
-  queryTransacoes.Active:=True;
-  queryBanco.Active:=False;
-  queryBanco.Active:=True;
+    UDM.DataModule2.TRSConectaBanco.Rollback;
+    queryConexoes.Active:=False;
+    queryConexoes.Active:=True;
+    queryTransacoes.Active:=False;
+    queryTransacoes.Active:=True;
+    queryBanco.Active:=False;
+    queryBanco.Active:=True;
+    querySweep.Active:=False;
+    querySweep.Active:=True;
+    queryConex.Active:=False;
+    queryConex.Active:=True;
+    querySQL.Active:=False;
+    querySQL.Active:=True;
+    queryScripts.Active:=False;
+    queryScripts.Active:=True;
   end;
 
 procedure TfrmMonitor.btnDellConexaoClick(Sender: TObject);
   begin
-  queryTransacoes.SQL.Text :='delete from mon$attachments where mon$attachments.mon$attachment_id=:id_tran';
-  queryTransacoes.ParamByName('id_tran').Value := StrToInt(edtDellConexao.Text);
-  queryTransacoes.ExecSQL;
+    queryTransacoes.SQL.Text :='delete from mon$attachments where mon$attachments.mon$attachment_id=:id_tran';
+    queryTransacoes.ParamByName('id_tran').Value := StrToInt(edtDellConexao.Text);
+    queryTransacoes.ExecSQL;
   end;
 
 procedure TfrmMonitor.Button1Click(Sender: TObject);
   begin
+    IBConfigService1.Active := True;
     IBConfigService1.SweepDatabase;
   end;
 
@@ -137,6 +159,10 @@ procedure TfrmMonitor.btnCancelDellConexaoClick(Sender: TObject);
     edtDellConexao.Text := '';
   end;
 
+procedure TfrmMonitor.FormClose(Sender: TObject; var Action: TCloseAction);
+  begin
+    frmLogin.Close;
+  end;
 
 procedure TfrmMonitor.FormShow(Sender: TObject);
   begin
@@ -145,18 +171,13 @@ procedure TfrmMonitor.FormShow(Sender: TObject);
     queryBanco.Active:=True;
     querySQL.Active:=True;
     queryScripts.Active:=True;
+    querySweep.Active:=True;
+    queryConex.Active:=True;
+
 
     lblFirebird_v.Caption :=IBDatabaseInfo1.Version;
-    //lblBanco_v.Caption := IBDatabaseInfo1.DBFileName;
-    lblPaginacao_v.Caption :=IntToStr(IBDatabaseInfo1.PageSize);
-    lblODS_v.Caption :=FloatToStr(IBDatabaseInfo1.FullODS);
     lblNomePc_v.Caption := IBDatabaseInfo1.DBSiteName;
-    lblEscritaForcada_v.Caption :=IntToStr(IBDatabaseInfo1.ForcedWrites);
     lblCurrentMemory_v.Caption :=FloatToStr(IBDatabaseInfo1.CurrentMemory);
-    //lblSweep_v.Caption :=IntToStr(IBDatabaseInfo1.SweepInterval);
-    lblBuffers_v.Caption :=IntToStr(IBDatabaseInfo1.NumBuffers);
-
-
   end;
 
 end.
